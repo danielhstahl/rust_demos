@@ -7,11 +7,12 @@ use crate::myexamplemodule::myexamplemodule::my_example;
 /// # Examples
 ///
 /// ```
-/// main();
+/// main(); //this will run when I run `cargo doc`.  `cargo doc` generates documentation AND runs doc tests.  `cargo doc --open`
 ///
 /// ```
 ///
 fn main() {
+    //main returns
     println!("Hello, world!");
     let result = my_example(2.0);
     println!("{}", result);
