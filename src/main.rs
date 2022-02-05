@@ -7,7 +7,7 @@ use crate::myexamplemodule::myexamplemodule::my_example;
 /// # Examples
 ///
 /// ```
-/// main(); //this will run when I run `cargo doc`.  `cargo doc` generates documentation AND runs doc tests.  `cargo doc --open`
+/// main(); //this will run when I run `cargo test`.  `cargo doc` generates documentation.  `cargo doc --open`
 ///
 /// ```
 ///
