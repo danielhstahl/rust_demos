@@ -62,13 +62,19 @@ fn example_lifetime<'a, 'b: 'a>(
     some_function_that_takes_the_vector_as_an_argument: &'a impl Fn(&[f64]),
     //note, impl Fn is required because the function can be a closure.
     //If you know that this will not be a closure, you can use `fn` instead of `impl Fn`,
-    //which will have mild performance implications
+    //which will have mild performance boosts
 ) -> impl Fn() + 'a {
     return || {
         some_function_that_takes_the_vector_as_an_argument(
             some_vector_that_will_be_around_for_longer_than_input_function,
         )
     };
+}
+
+/// SERDE example with str
+#[derive(Serialize, Deserialize)]
+pub struct SerdeExampleStr<'a> {
+    some_str: &'a str,
 }
 
 ///example borrow vs reference
@@ -128,9 +134,21 @@ mod tests {
         //let my_closure_two = example_lifetime(&vec![3.0, 3.0], &f);
     }
     #[test]
+    fn it_deserializes_str() {
+        let serialized = "{\"some_str\": \"hello\"}";
+        let deserialized: SerdeExampleStr = serde_json::from_str(&serialized).unwrap();
+        assert_eq!(deserialized.some_str, "hello");
+    }
+    #[test]
+    fn it_serializes_str() {
+        let deserialized: SerdeExampleStr = SerdeExampleStr { some_str: "hello" };
+        let serialized = serde_json::to_string(&deserialized).unwrap();
+        assert_eq!(serialized, "{\"some_str\": \"hello\"}");
+    }
+    #[test]
     fn it_does_borrow_and_reference() {
         let x = vec![2, 3, 4];
-        example_borrow(x);
+        example_borrow(x); //note that in rust you have to EXPLICITLY copy non-primitives...unlike C/C++ this is a "move" not a copy
 
         //uh oh, can't do this!  x was "moved" into example_reference_vs_borrow
         //x.iter().for_each(|v| println!("{}", v));
