@@ -13,3 +13,9 @@ And...you are done.
 ## To run unit tests
 
 `cargo test`
+
+## Features of rust
+
+* No runtime
+* No garbage collector
+* No dangling pointers (and many other C++/C issues)

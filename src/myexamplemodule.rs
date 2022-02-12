@@ -50,6 +50,16 @@ impl fmt::Display for SerdeExample {
 
 ///example par_iter
 ///
+/// Doctest example
+///
+///I can create doc tests right from these comments.
+/// # Examples
+///
+/// ```
+/// let my_var=vec!["hello", "world"];
+/// example_par_iter(&my_var);
+/// ```
+///
 fn example_par_iter(some_vec: &[&str]) {
     some_vec.par_iter().for_each(|v| println!("{}", v))
 }
@@ -143,7 +153,7 @@ mod tests {
     fn it_serializes_str() {
         let deserialized: SerdeExampleStr = SerdeExampleStr { some_str: "hello" };
         let serialized = serde_json::to_string(&deserialized).unwrap();
-        assert_eq!(serialized, "{\"some_str\": \"hello\"}");
+        assert_eq!(serialized, "{\"some_str\":\"hello\"}");
     }
     #[test]
     fn it_does_borrow_and_reference() {
